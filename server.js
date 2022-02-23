@@ -12,6 +12,11 @@ const Job = require('./routes/job')
 const Auth = require('./routes/auth')
 const ErrorHandler = require('./middleware/error')
 
+// Swaggr UI
+const swaggerUI = require('swagger-ui-express')
+const YMAL = require('yamljs')
+const swaggerDocument = YMAL.load('./swagger.yaml')
+
 // Load env
 dotenv.config({path: './config/config.env'})
 
@@ -34,13 +39,17 @@ app.use(cors())
 app.use(xss())
 
 app.get('/', (req, res,) => {
-    res.send('Job Api')
+    res.send('<h1>Job API</h1><a href="/api-doc">Documentation</a>')
 })
+
+app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 // Morgan middleware
 if(process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
+
+
 
 // Mount Routes
 app.use('/api/v1/jobs', Job)

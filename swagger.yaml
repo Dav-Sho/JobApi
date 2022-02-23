@@ -1,0 +1,234 @@
+openapi: 3.0.0
+info:
+  title: Job
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://example.com/api/v1
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - auth
+      summary: register User
+      description: Register user to DB
+      operationId: registerUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerUserRequest'
+            example:
+              name: shola
+              email: shola@gmail.com
+              password: '123456'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /auth/login:
+    post:
+      tags:
+      - auth
+      summary: login User
+      description: Login User to DB
+      operationId: loginUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginUserRequest'
+            example:
+              email: shodunkedavid39@gmail.com
+              password: '1234567'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /jobs:
+    get:
+      tags:
+      - jobs
+      summary: Get all jobs
+      description: Get all jobs from database
+      operationId: Getalljobs
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    post:
+      tags:
+      - jobs
+      summary: Create job
+      description: Add job to DB
+      operationId: Createjob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatejobRequest'
+            example:
+              company: Test
+              title: Blockchain Developer
+              position: Senior Developer
+              description: We are looking for a highly capable blockchain developer to design, implement, and distribute a secure blockchain-based network. You will be analyzing our blockchain needs, designing customized blockchain technologies, and launching and maintaining our blockchain network.
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    get:
+      tags:
+      - jobs
+      summary: Get single job
+      description: Get single job from DB
+      operationId: Getsinglejob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    patch:
+      tags:
+      - jobs
+      summary: Update job
+      description: Update job from DB
+      operationId: Updatejob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatejobRequest'
+            example:
+              status: interview
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /job/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    delete:
+      tags:
+      - jobs
+      summary: Delete job
+      description: Delete job in DB
+      operationId: Deletejob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    registerUserRequest:
+      title: registerUserRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: shola
+        email: shola@gmail.com
+        password: '123456'
+    loginUserRequest:
+      title: loginUserRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: shodunkedavid39@gmail.com
+        password: '1234567'
+    CreatejobRequest:
+      title: CreatejobRequest
+      required:
+      - company
+      - title
+      - position
+      - description
+      type: object
+      properties:
+        company:
+          type: string
+        title:
+          type: string
+        position:
+          type: string
+        description:
+          type: string
+      example:
+        company: Test
+        title: Blockchain Developer
+        position: Senior Developer
+        description: We are looking for a highly capable blockchain developer to design, implement, and distribute a secure blockchain-based network. You will be analyzing our blockchain needs, designing customized blockchain technologies, and launching and maintaining our blockchain network.
+    UpdatejobRequest:
+      title: UpdatejobRequest
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+      example:
+        status: interview
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: auth
+  description: User Authentication CRUD Functionality
+- name: jobs
+  description: Job CRUD Functionality
