@@ -4,7 +4,7 @@ info:
   contact: {}
   version: '1.0'
 servers:
-- url: http://example.com/api/v1
+- url: https://job-apis.herokuapp.com/api/v1
   variables: {}
 paths:
   /auth/register:
